@@ -1,0 +1,116 @@
+﻿@model InvoiceCreator.Models.ViewModels.InvoicePdf
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Faktúra</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <div>
+            <div>
+                <p><b>Faktúra</b></p>
+            </div>
+
+            <div>
+                <p><b>č. @Model.Invoice.NumberOfInvoice</b></p>
+            </div>
+
+            <div>
+                Dodávateľ: <b>@Model.Supplier.Name</b> <br>
+                Adresa: <b>@Model.Supplier.Address</b><br>
+                IČO: <b>@Model.Supplier.ICO</b><br>
+                DIČ: <b>@Model.Supplier.DIC</b><br>
+                IČ DPH: <b>@Model.Supplier.IC_DPH</b><br>
+                WWW: <b>@Model.Supplier.URL</b>
+            </div>
+            <hr />
+            <div>
+                Odberateľ: <b>@Model.Costumer.Name</b><br>
+                Adresa: <b>@Model.Costumer.Address</b><br>
+                IČO: <b>@Model.Costumer.ICO</b><br>
+                DIČ: <b>@Model.Costumer.DIC</b><br>
+                IČ DPH: <b>@Model.Costumer.IC_DPH</b><br>
+                WWW: <b>@Model.Costumer.URL</b>
+            </div>
+            <hr />
+            <div>
+                Dátum splatnosti: <b>na toto som zabudol</b><br>
+                Banka: <b>@Model.PaymentData.Bank</b><br>
+                IBAN: <b>@Model.PaymentData.IBAN</b><br>
+                SWIFT: <b>@Model.PaymentData.SWIFT</b><br>
+                Variabilný symbol: <b>@Model.PaymentData.VariableSymbol</b><br>
+                Konštantný symbol: <b>@Model.PaymentData.ConstantSymbol</b><br>
+                Poznámka: <b>@Model.PaymentData.Note</b>
+            </div>
+
+        </div>
+
+
+        <div>
+            <br>
+            <table border="1" >
+                <tr style="background-color: #bababa;">
+                    <th>Názov položky</th>
+                    <th>Popis položky</th>
+                    <th>Jadnotková cena bez DPH</th>
+                    <th>DPH</th>
+                    <th>Jednotková cena s DPH</th>
+                    <th>Celkovo</th>
+                </tr>
+
+                @foreach (var service in Model.Services)
+                {
+                    <tr>
+                        <td>@service.NameOfService</td>
+                        <td>@service.DescriptionOfService</td>
+                        <td>@service.UnitPriceWithoutDPH</td>
+                        <td>@service.DPH</td>
+                        <td>@service.UnitPriceWithDPH</td>
+                        <td>@service.TotalPriceWithDPH</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+
+        <div>
+            <p>Suma k úhrade: <b>@Model.Invoice.TotalPrice</b></p>
+        </div>
+
+        <div>
+            <p>Poznámka: @Model.Invoice.Note </p>
+        </div>
+
+        <div>
+            <p>Podpis odberateľa:</p>
+        </div>
+
+        <div>
+            <p>Podpis dodávateľa:</p>
+        </div>
+    </div>
+</body>
+</html>
+
+$(document).ready(function() {
+  generatePdf();
+});
+
+function generatePdf() {
+  $.ajax({
+    url: '/InvoicePattern/GeneratePdf',
+    type: 'GET',
+    success: function(response) {
+      window.open('data:application/pdf;base64,' + response, '_blank');
+    },
+    error: function(xhr, status, error) {
+      console.log(error);
+    }
+  });
+}
