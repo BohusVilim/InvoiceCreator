@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InvoiceCreator.InvoiceCreatorDbContext;
 using InvoiceCreator.Models.MainModels;
+using InvoiceCreator.Helpers;
 
 namespace InvoiceCreator.Controllers
 {
@@ -14,11 +15,13 @@ namespace InvoiceCreator.Controllers
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
         private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
+        private readonly Helpers.Helpers _helpers;
 
-        public SuppliersController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext)
+        public SuppliersController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext, Helpers.Helpers helpers)
         {
             _context = context;
             _inMemoryContext = inMemoryContext;
+            _helpers = helpers;
         }
 
         // GET: Suppliers
@@ -50,6 +53,8 @@ namespace InvoiceCreator.Controllers
         // GET: Suppliers/Create
         public IActionResult Create()
         {
+            _helpers.ClearInMemoryDatabase();
+
             return View();
         }
 

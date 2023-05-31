@@ -67,6 +67,6 @@ var context = scope.ServiceProvider.GetRequiredService<InvoiceCreatorDbContext>(
 context.Database.EnsureCreated();
 
 IWebHostEnvironment env = app.Environment;
-RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, @"C:\Users\bohus\OneDrive\Poèítaè\Praca\InvoiceCreator\InvoiceCreator\InvoiceCreator\wwwroot\Rotativa\wkhtmltopdf\bin");
+RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, @"C:\Users\bohus\OneDrive\Poèítaè\Praca\InvoiceCreator\InvoiceCreator\wwwroot\Rotativa\wkhtmltopdf\bin");
 
 app.Run();

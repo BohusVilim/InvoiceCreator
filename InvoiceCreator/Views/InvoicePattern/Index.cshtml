@@ -97,20 +97,3 @@
     </div>
 </body>
 </html>
-
-$(document).ready(function() {
-  generatePdf();
-});
-
-function generatePdf() {
-  $.ajax({
-    url: '/InvoicePattern/GeneratePdf',
-    type: 'GET',
-    success: function(response) {
-      window.open('data:application/pdf;base64,' + response, '_blank');
-    },
-    error: function(xhr, status, error) {
-      console.log(error);
-    }
-  });
-}

@@ -71,7 +71,6 @@ namespace InvoiceCreator.Controllers
 
             if (_invoiceService.CreateInvoice(invoice) == true)
             {
-                _helpers.ClearInMemoryDatabase();
                 return RedirectToAction("Index", "InvoicePattern");
             }
 
