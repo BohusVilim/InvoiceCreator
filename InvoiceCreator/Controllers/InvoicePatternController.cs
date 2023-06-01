@@ -25,7 +25,14 @@ namespace InvoiceCreator.Controllers
         }
 
         // GET: InvoicePattern
+        [HttpGet]
         public IActionResult Index()
+        {
+            return View(_invoicePdf);
+        }
+
+        [HttpGet]
+        public IActionResult DownloadPDF()
         {
             return new ViewAsPdf("~/Views/InvoicePattern/Index.cshtml", _invoicePdf)
             {

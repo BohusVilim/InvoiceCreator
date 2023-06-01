@@ -9,6 +9,7 @@ using InvoiceCreator.InvoiceCreatorDbContext;
 using InvoiceCreator.Models.MainModels;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using InvoiceCreator.Services;
+using InvoiceCreator.MockingGenerator;
 
 namespace InvoiceCreator.Controllers
 {
@@ -18,13 +19,19 @@ namespace InvoiceCreator.Controllers
         private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
         private readonly InvoiceService _invoiceService;
         private readonly Helpers.Helpers _helpers;
+        private readonly MockingData _mockingData;
 
-        public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext, InvoiceService invoiceService, Helpers.Helpers helpers)
+        public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, 
+            InvoiceCreatorInMemoryDbContext inMemoryContext, 
+            InvoiceService invoiceService, 
+            Helpers.Helpers helpers, 
+            MockingData mockingData)
         {
             _context = context;
             _inMemoryContext = inMemoryContext;
             _invoiceService = invoiceService;
             _helpers = helpers;
+            _mockingData = mockingData;
         }
 
         // GET: Invoices
@@ -57,6 +64,7 @@ namespace InvoiceCreator.Controllers
         public IActionResult Create()
         {
             ViewBag.NumberOfInvoice = _helpers.DefaultNumberOfInvoice();
+            _mockingData.FillInMemoryDatabase();
 
             return View();
         }
@@ -71,7 +79,7 @@ namespace InvoiceCreator.Controllers
 
             if (_invoiceService.CreateInvoice(invoice) == true)
             {
-                return RedirectToAction("Index", "InvoicePattern");
+                return Json(new { success = true });
             }
 
             return View(invoice);

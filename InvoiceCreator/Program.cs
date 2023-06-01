@@ -1,6 +1,7 @@
 using InvoiceCreator.Controllers;
 using InvoiceCreator.Helpers;
 using InvoiceCreator.InvoiceCreatorDbContext;
+using InvoiceCreator.MockingGenerator;
 using InvoiceCreator.Models.MainModels;
 using InvoiceCreator.Models.ViewModels;
 using InvoiceCreator.Services;
@@ -19,18 +20,13 @@ builder.Services.AddDbContext<InvoiceCreatorInMemoryDbContext>(options =>
     options.UseInMemoryDatabase("InvoiceCreatorInMemory"));
 
 builder.Services.AddScoped<HomeController>();
-/*builder.Services.AddScoped<Supplier>();
-builder.Services.AddScoped<PaymentData>();
-builder.Services.AddScoped<Costumer>();
-builder.Services.AddScoped<Service>();
-builder.Services.AddScoped<List<Service>, List<Service>>();
-builder.Services.AddScoped<Invoice>();*/
 builder.Services.AddScoped<InvoicesController>();
 builder.Services.AddScoped<SuppliersController>();
 builder.Services.AddScoped<CostumersController>();
 builder.Services.AddScoped<PaymentDatasController>();
 builder.Services.AddScoped<ServicesController>(); 
 builder.Services.AddScoped<InvoiceService>();
+builder.Services.AddScoped<MockingData>();
 builder.Services.AddScoped<Helpers>(); 
 builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<InvoicePatternController>();
