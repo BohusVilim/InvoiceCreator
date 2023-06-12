@@ -18,10 +18,12 @@ namespace InvoiceCreator.Controllers
     {
         private readonly InvoicePdfService _invoicePdfService;
         private readonly InvoicePdf _invoicePdf;
-        public InvoicePatternController(InvoicePdfService invoicePdfService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public InvoicePatternController(InvoicePdfService invoicePdfService, IHttpContextAccessor httpContextAccessor)
         {
             _invoicePdfService = invoicePdfService;
             _invoicePdf = _invoicePdfService.CreateInvoicePdf();
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: InvoicePattern
@@ -38,6 +40,32 @@ namespace InvoiceCreator.Controllers
             {
                 FileName = "Invoice.pdf"
             };
+        }
+
+        public async Task CreateTemporaryPdf()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "Invoice.pdf");
+
+            var pdf = new ViewAsPdf("~/Views/InvoicePattern/Index.cshtml", _invoicePdf)
+            {
+                SaveOnServerPath = path
+            };
+
+            var actionContext = new ActionContext
+            {
+                HttpContext = _httpContextAccessor.HttpContext,
+                RouteData = new RouteData(),
+                ActionDescriptor = new ControllerActionDescriptor()
+            };
+
+            if(pdf != null)
+            {
+                if(actionContext.HttpContext != null)
+                {
+                    var fileContent = await pdf.BuildFile(actionContext);
+                    System.IO.File.WriteAllBytes(path, fileContent);
+                }
+            }
         }
     }
 }

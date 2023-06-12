@@ -5,11 +5,13 @@ using InvoiceCreator.MockingGenerator;
 using InvoiceCreator.Models.MainModels;
 using InvoiceCreator.Models.ViewModels;
 using InvoiceCreator.Services;
+using InvoiceCreator.Models.EmailModels;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 using static System.Formats.Asn1.AsnWriter;
+using KodimWeby.InternalServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,10 @@ builder.Services.AddDbContext<InvoiceCreatorDbContext>(options =>
 
 builder.Services.AddDbContext<InvoiceCreatorInMemoryDbContext>(options =>
     options.UseInMemoryDatabase("InvoiceCreatorInMemory"));
+
+EmailService.ConfigureEmail(builder.Services);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<HomeController>();
 builder.Services.AddScoped<InvoicesController>();
@@ -31,8 +37,6 @@ builder.Services.AddScoped<Helpers>();
 builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<InvoicePatternController>();
 builder.Services.AddScoped<InvoicePdfService>();
-
-
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

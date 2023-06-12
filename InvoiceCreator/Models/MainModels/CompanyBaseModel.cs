@@ -8,7 +8,7 @@ namespace InvoiceCreator.Models.MainModels
         public string Address { get; set; } = null!;
         public string Country { get; set; } = null!;
         public int ICO { get; set; }
-        public int DIC { get; set; }
+        public long DIC { get; set; }
         public bool IsDPHPayer { get; set; }
         public string? IC_DPH { get; set; }
         public string? URL { get; set; }

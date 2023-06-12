@@ -1,5 +1,6 @@
 ﻿using InvoiceCreator.Models.MainModels;
 using Microsoft.EntityFrameworkCore;
+using InvoiceCreator.Models.EmailModels;
 
 namespace InvoiceCreator.InvoiceCreatorDbContext
 {
@@ -34,5 +35,7 @@ namespace InvoiceCreator.InvoiceCreatorDbContext
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<InvoiceCreator.Models.EmailModels.EmailModel> EmailModel { get; set; } = default!;
     }
 }
