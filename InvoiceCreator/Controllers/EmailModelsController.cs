@@ -67,17 +67,21 @@ namespace InvoiceCreator.Controllers
         {
             if (ModelState.IsValid)
             {
+                var fromAddress = new EmailAddress();
+                fromAddress.Name = emailModel.SenderName;
+                fromAddress.Address = _fromAndToEmailAddress.Address;
+
                 var toAddress = new EmailAddress();
-                toAddress.Name = emailModel.Name;
-                toAddress.Address = emailModel.Email;
+                toAddress.Name = emailModel.RecipientName;
+                toAddress.Address = emailModel.RecipientEmail;
 
                 EmailMessage msgToSend = new EmailMessage
                 {
                     FromAddresses = new List<EmailAddress> { _fromAndToEmailAddress },
                     ToAddresses = new List<EmailAddress> { toAddress },
-                    Content = $"Here is your message: Name: {emailModel.Name}, " +
-                        $"Email: {emailModel.Email}, Message: {emailModel.Message}",
-                    Subject = "Contact Form - BasicContactForm App"
+                    Content = $"Sender: {emailModel.SenderName}, " +
+                        $"Email: {emailModel.SenderEmail}, Message: {emailModel.Message}",
+                    Subject = "Invoice created by Invoice Creator"
                 };
 
                 _emailService.Send(msgToSend);

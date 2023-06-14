@@ -4,8 +4,10 @@ namespace InvoiceCreator.Models.EmailModels
 {
     public class EmailModel : BaseIdentity
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public string RecipientName { get; set; }
+        public string RecipientEmail { get; set; }
+        public string SenderName { get; set; }
+        public string SenderEmail { get; set; }
         public string Message { get; set; }
     }
 }

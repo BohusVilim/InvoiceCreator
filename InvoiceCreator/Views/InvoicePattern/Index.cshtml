@@ -40,7 +40,7 @@
             </div>
             <hr />
             <div>
-                Dátum splatnosti: <b>na toto som zabudol</b><br>
+                Dátum splatnosti: <b>@Model.PaymentData.DueDate.ToString("dd.MM.yyyy")</b><br>
                 Banka: <b>@Model.PaymentData.Bank</b><br>
                 IBAN: <b>@Model.PaymentData.IBAN</b><br>
                 SWIFT: <b>@Model.PaymentData.SWIFT</b><br>
@@ -58,6 +58,7 @@
                 <tr style="background-color: #bababa;">
                     <th>Názov položky</th>
                     <th>Popis položky</th>
+                    <th>Počet jednotiek</th>
                     <th>Jadnotková cena bez DPH</th>
                     <th>DPH</th>
                     <th>Jednotková cena s DPH</th>
@@ -69,6 +70,7 @@
                     <tr>
                         <td>@service.NameOfService</td>
                         <td>@service.DescriptionOfService</td>
+                        <td>@service.NumberOfUnits</td>
                         <td>@service.UnitPriceWithoutDPH</td>
                         <td>@service.DPH</td>
                         <td>@service.UnitPriceWithDPH</td>
