@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InvoiceCreator.InvoiceCreatorDbContext;
 using InvoiceCreator.Models.EmailModels;
-using InvoiceCreator.Models.EmailModels.Interfaces;
 using KodimWeby.InternalServices;
+using InvoiceCreator.Services.Interfaces;
+using InvoiceCreator.Services;
 
 namespace InvoiceCreator.Controllers
 {
@@ -17,13 +18,14 @@ namespace InvoiceCreator.Controllers
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
         private EmailAddress _fromAndToEmailAddress;
         private IEmailService _emailService;
+        private EmailModelService _emailModelService;
 
-
-        public EmailModelsController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, EmailAddress emailAddress, IEmailService emailService)
+        public EmailModelsController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, EmailAddress emailAddress, IEmailService emailService, EmailModelService emailModelService)
         {
             _context = context;
             _fromAndToEmailAddress = emailAddress;
             _emailService = emailService;
+            _emailModelService = emailModelService;
         }
 
         // GET: EmailModels
@@ -67,31 +69,8 @@ namespace InvoiceCreator.Controllers
         {
             if (ModelState.IsValid)
             {
-                var fromAddress = new EmailAddress();
-                fromAddress.Name = emailModel.SenderName;
-                fromAddress.Address = _fromAndToEmailAddress.Address;
-
-                var toAddress = new EmailAddress();
-                toAddress.Name = emailModel.RecipientName;
-                toAddress.Address = emailModel.RecipientEmail;
-
-                EmailMessage msgToSend = new EmailMessage
-                {
-                    FromAddresses = new List<EmailAddress> { _fromAndToEmailAddress },
-                    ToAddresses = new List<EmailAddress> { toAddress },
-                    Content = $"Sender: {emailModel.SenderName}, " +
-                        $"Email: {emailModel.SenderEmail}, Message: {emailModel.Message}",
-                    Subject = "Invoice created by Invoice Creator"
-                };
-
-                _emailService.Send(msgToSend);
-
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Invoice.pdf");
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
+                _emailModelService.CreateAndSendEmail(emailModel);
+                
                 return RedirectToAction("Index", "Home"); 
             }
             return View(emailModel);

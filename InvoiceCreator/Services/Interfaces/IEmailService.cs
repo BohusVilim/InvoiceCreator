@@ -1,4 +1,6 @@
-﻿namespace InvoiceCreator.Models.EmailModels.Interfaces
+﻿using InvoiceCreator.Models.EmailModels;
+
+namespace InvoiceCreator.Services.Interfaces
 {
     public interface IEmailService
     {

@@ -1,5 +1,6 @@
 ﻿using InvoiceCreator.Models.EmailModels;
-using InvoiceCreator.Models.EmailModels.Interfaces;
+using InvoiceCreator.Services;
+using InvoiceCreator.Services.Interfaces;
 
 namespace KodimWeby.InternalServices
 {

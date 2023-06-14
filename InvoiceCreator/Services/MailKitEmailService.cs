@@ -1,9 +1,9 @@
 ﻿using InvoiceCreator.Controllers;
 using InvoiceCreator.Models.EmailModels;
-using InvoiceCreator.Models.EmailModels.Interfaces;
+using InvoiceCreator.Services.Interfaces;
 using MimeKit;
 
-namespace InvoiceCreator.Models.EmailModels
+namespace InvoiceCreator.Services
 {
     public class MailKitEmailService : IEmailService
     {
