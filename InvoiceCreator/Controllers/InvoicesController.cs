@@ -10,6 +10,7 @@ using InvoiceCreator.Models.MainModels;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using InvoiceCreator.Services;
 using InvoiceCreator.MockingGenerator;
+using System.Text.Json;
 
 namespace InvoiceCreator.Controllers
 {
@@ -37,6 +38,24 @@ namespace InvoiceCreator.Controllers
         // GET: Invoices
         public async Task<IActionResult> Index()
         {
+            if (_inMemoryContext.Searchings.Count() > 0)
+            {
+                var list = new List<Invoice>();
+                var search = _inMemoryContext.Searchings.Last().SearchContent;
+
+                foreach (var invoice in _context.Invoices)
+                {
+                    var invoiceJson = JsonSerializer.Serialize(invoice);
+                    if (invoiceJson.Contains(search))
+                    {
+                        list.Add(invoice);
+                    }
+                }
+
+
+                ViewBag.Search = list;
+            }
+
               return _context.Invoices != null ? 
                           View(await _context.Invoices.ToListAsync()) :
                           Problem("Entity set 'InvoiceCreatorDbContext.Invoices'  is null.");
