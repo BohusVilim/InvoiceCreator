@@ -21,40 +21,27 @@ namespace InvoiceCreator.Controllers
         private readonly InvoiceService _invoiceService;
         private readonly Helpers.Helpers _helpers;
         private readonly MockingData _mockingData;
+        private readonly InvoiceControllerService _invoiceControllerService;
 
         public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, 
             InvoiceCreatorInMemoryDbContext inMemoryContext, 
             InvoiceService invoiceService, 
             Helpers.Helpers helpers, 
-            MockingData mockingData)
+            MockingData mockingData,
+            InvoiceControllerService invoiceControllerService)
         {
             _context = context;
             _inMemoryContext = inMemoryContext;
             _invoiceService = invoiceService;
             _helpers = helpers;
             _mockingData = mockingData;
+            _invoiceControllerService = invoiceControllerService;
         }
 
         // GET: Invoices
         public async Task<IActionResult> Index()
         {
-            if (_inMemoryContext.Searchings.Count() > 0)
-            {
-                var list = new List<Invoice>();
-                var search = _inMemoryContext.Searchings.Last().SearchContent;
-
-                foreach (var invoice in _context.Invoices)
-                {
-                    var invoiceJson = JsonSerializer.Serialize(invoice);
-                    if (invoiceJson.Contains(search))
-                    {
-                        list.Add(invoice);
-                    }
-                }
-
-
-                ViewBag.Search = list;
-            }
+            ViewBag.Search = _invoiceControllerService.Search();
 
               return _context.Invoices != null ? 
                           View(await _context.Invoices.ToListAsync()) :

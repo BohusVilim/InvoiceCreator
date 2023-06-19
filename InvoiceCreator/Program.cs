@@ -25,6 +25,7 @@ EmailService.ConfigureEmail(builder.Services);
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddScoped<Invoice>();
 builder.Services.AddScoped<HomeController>();
 builder.Services.AddScoped<InvoicesController>();
 builder.Services.AddScoped<SuppliersController>();
@@ -37,6 +38,8 @@ builder.Services.AddScoped<Helpers>();
 builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<InvoicePatternController>();
 builder.Services.AddScoped<InvoicePdfService>();
+builder.Services.AddScoped<SearchingController>();
+builder.Services.AddScoped<InvoiceControllerService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
