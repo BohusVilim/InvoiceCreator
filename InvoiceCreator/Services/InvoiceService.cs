@@ -67,5 +67,14 @@ namespace InvoiceCreator.Services
 
             return result;
         }
+
+        public bool UpdateInvoice(int id, Invoice invoice)
+        {
+            bool result = false;
+
+
+
+            return result;
+        }
     }
 }
