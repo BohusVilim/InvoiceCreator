@@ -5,6 +5,7 @@ namespace InvoiceCreator.Models.MainModels
     public class Invoice : BaseIdentity
     {
         public int NumberOfInvoice { get; set; }
+        public DateTime DateOfIssue { get; set; }
         public Supplier Supplier { get; set; } = null!;
         public int SupplierId { get; set; }
         public Costumer Costumer { get; set; } = null!;

@@ -13,6 +13,7 @@ namespace InvoiceCreator.InvoiceCreatorDbContext
         public DbSet<Costumer> Costumers { get; set; }
         public DbSet<PaymentData> PaymentDatas { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<Searching> Searchings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

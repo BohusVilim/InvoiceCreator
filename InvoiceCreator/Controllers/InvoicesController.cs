@@ -10,6 +10,7 @@ using InvoiceCreator.Models.MainModels;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using InvoiceCreator.Services;
 using InvoiceCreator.MockingGenerator;
+using System.Text.Json;
 
 namespace InvoiceCreator.Controllers
 {
@@ -20,25 +21,35 @@ namespace InvoiceCreator.Controllers
         private readonly InvoiceService _invoiceService;
         private readonly Helpers.Helpers _helpers;
         private readonly MockingData _mockingData;
+        private readonly InvoiceControllerService _invoiceControllerService;
 
         public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, 
             InvoiceCreatorInMemoryDbContext inMemoryContext, 
             InvoiceService invoiceService, 
             Helpers.Helpers helpers, 
-            MockingData mockingData)
+            MockingData mockingData,
+            InvoiceControllerService invoiceControllerService)
         {
             _context = context;
             _inMemoryContext = inMemoryContext;
             _invoiceService = invoiceService;
             _helpers = helpers;
             _mockingData = mockingData;
+            _invoiceControllerService = invoiceControllerService;
         }
 
         // GET: Invoices
         public async Task<IActionResult> Index()
         {
+            ViewBag.Search = _invoiceControllerService.Search();
+
               return _context.Invoices != null ? 
-                          View(await _context.Invoices.ToListAsync()) :
+                          View(await _context.Invoices
+                          .Include(a => a.Costumer)
+                          .Include(b => b.Supplier)
+                            .ThenInclude(s => s.PaymentData)
+                          .Include(c => c.Services)
+                          .ToListAsync()) :
                           Problem("Entity set 'InvoiceCreatorDbContext.Invoices'  is null.");
         }
 
@@ -85,39 +96,57 @@ namespace InvoiceCreator.Controllers
             return View(invoice);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Invoices == null)
+            {
+                return NotFound();
+            }
+
+            var invoices = await _context.Invoices
+                .Include(a => a.Costumer)
+                .Include(b => b.Supplier)
+                  .ThenInclude(s => s.PaymentData)
+                .Include(c => c.Services)
+                .ToListAsync();
+            var invoice = invoices.FirstOrDefault(a => a.Id == id);
+
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+            return View(invoice);
+        }
+
         // POST: Invoices/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("NumberOfInvoice,TotalPrice,Note,Id")] Invoice invoice)
+        public async Task<IActionResult> Edit(int id, Invoice invoice)
         {
             if (id != invoice.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(invoice);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InvoiceExists(invoice.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(invoice);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(invoice);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InvoiceExists(invoice.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
         // GET: Invoices/Delete/5
