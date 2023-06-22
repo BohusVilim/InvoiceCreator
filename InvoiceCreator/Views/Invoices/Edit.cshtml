@@ -8,32 +8,187 @@
 
 <h4>Invoice</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-6 col-md-4">
+        
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NumberOfInvoice" class="control-label"></label>
                 <input asp-for="NumberOfInvoice" class="form-control" />
                 <span asp-validation-for="NumberOfInvoice" class="text-danger"></span>
             </div>
+            <hr />
             <div class="form-group">
-                <label asp-for="TotalPrice" class="control-label"></label>
-                <input asp-for="TotalPrice" class="form-control" />
-                <span asp-validation-for="TotalPrice" class="text-danger"></span>
+                <label asp-for="Supplier.Name" class="control-label"></label>
+                <input asp-for="Supplier.Name" class="form-control" />
+                <span asp-validation-for="Supplier.Name" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Supplier.Address" class="control-label"></label>
+                <input asp-for="Supplier.Address" class="form-control" />
+                <span asp-validation-for="Supplier.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.ICO" class="control-label"></label>
+                <input asp-for="Supplier.ICO" class="form-control" />
+                <span asp-validation-for="Supplier.ICO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.DIC" class="control-label"></label>
+                <input asp-for="Supplier.DIC" class="form-control" />
+                <span asp-validation-for="Supplier.DIC" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Supplier.IsDPHPayer" /> @Html.DisplayNameFor(model => model.Supplier.IsDPHPayer)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.IC_DPH" class="control-label"></label>
+                <input asp-for="Supplier.IC_DPH" class="form-control" />
+                <span asp-validation-for="Supplier.IC_DPH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.URL" class="control-label"></label>
+                <input asp-for="Supplier.URL" class="form-control" />
+                <span asp-validation-for="Supplier.URL" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Costumer.Name" class="control-label"></label>
+                <input asp-for="Costumer.Name" class="form-control" />
+                <span asp-validation-for="Costumer.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costumer.Address" class="control-label"></label>
+                <input asp-for="Costumer.Address" class="form-control" />
+                <span asp-validation-for="Costumer.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costumer.ICO" class="control-label"></label>
+                <input asp-for="Costumer.ICO" class="form-control" />
+                <span asp-validation-for="Costumer.ICO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costumer.DIC" class="control-label"></label>
+                <input asp-for="Costumer.DIC" class="form-control" />
+                <span asp-validation-for="Costumer.DIC" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Costumer.IsDPHPayer" /> @Html.DisplayNameFor(model => model.Costumer.IsDPHPayer)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costumer.IC_DPH" class="control-label"></label>
+                <input asp-for="Costumer.IC_DPH" class="form-control" />
+                <span asp-validation-for="Costumer.IC_DPH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Costumer.URL" class="control-label"></label>
+                <input asp-for="Costumer.URL" class="form-control" />
+                <span asp-validation-for="Costumer.URL" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateOfIssue" class="control-label"></label>
+                <input type="date" asp-for="DateOfIssue" class="form-control" />
+                <span asp-validation-for="DateOfIssue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.DueDate" class="control-label"></label>
+                <input type="date" asp-for="Supplier.PaymentData.DueDate" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.Bank" class="control-label"></label>
+                <input asp-for="Supplier.PaymentData.Bank" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.Bank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.IBAN" class="control-label"></label>
+                <input asp-for="Supplier.PaymentData.IBAN" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.IBAN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.SWIFT" class="control-label"></label>
+                <input asp-for="Supplier.PaymentData.SWIFT" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.SWIFT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.VariableSymbol" class="control-label"></label>
+                <input asp-for="Supplier.PaymentData.VariableSymbol" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.VariableSymbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.ConstantSymbol" class="control-label"></label>
+                <input asp-for="Supplier.PaymentData.ConstantSymbol" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.ConstantSymbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Supplier.PaymentData.Note" class="control-label"></label>
+                <input asp-for="Supplier.PaymentData.Note" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.Note" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @if (Model.Services != null)
+            {
+                foreach (var item in Model.Services)
+                {
+                    <div class="form-group">
+                        <label asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().NameOfService" class="control-label"></label>
+                        <input asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().NameOfService" class="form-control" />
+                        <span asp-validation-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().NameOfService" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().DescriptionOfService" class="control-label"></label>
+                        <input asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().DescriptionOfService" class="form-control" />
+                        <span asp-validation-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().DescriptionOfService" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().NumberOfUnits" class="control-label"></label>
+                        <input asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().NumberOfUnits" class="form-control" />
+                        <span asp-validation-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().NumberOfUnits" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().DPH" class="control-label"></label>
+                        <select asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().DPH" class="form-control">
+                            <option value="20">20</option>
+                            <option value="10">10</option>
+                            <option value="5">5</option>
+                        </select>
+                        <span asp-validation-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().DPH" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().UnitPriceWithDPH" class="control-label"></label>
+                        <input asp-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().UnitPriceWithDPH" class="form-control" />
+                        <span asp-validation-for="Services.Where(a => a.Id == item.Id).FirstOrDefault().UnitPriceWithDPH" class="text-danger"></span>
+                    </div>
+                }
+            }
+
+            <hr />
             <div class="form-group">
                 <label asp-for="Note" class="control-label"></label>
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
+            <hr />
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>

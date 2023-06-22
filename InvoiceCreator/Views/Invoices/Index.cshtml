@@ -12,9 +12,13 @@
     <a href="https://localhost:7248/Suppliers/Create">Create New</a>
 </p>
 
-<form asp-controller="Searching" asp-action="Search" method="post">
-    <input type="text" name="SearchContent" />
-    <input type="submit" value="Search" />
+<form method="post" asp-controller="Searching" asp-action="Search">
+    <div class="text-danger">
+        <div class="form-group">
+            <input type="text" name="SearchContent"/>
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </div>    
 </form>
 
 
@@ -31,6 +35,18 @@
                     @Html.DisplayNameFor(model => model.NumberOfInvoice)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.DateOfIssue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Supplier.PaymentData.DueDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Costumer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Services)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.TotalPrice)
                 </th>
                 <th>
@@ -45,6 +61,21 @@
                 <tr>
                     <td>
                         @item.NumberOfInvoice
+                    </td>
+                    <td>
+                        @item.DateOfIssue.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @item.Supplier.PaymentData.DueDate.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @item.Costumer.Name
+                    </td>
+                    <td>
+                        @foreach (var service in item.Services)
+                        {
+                            @service.NameOfService
+                        }
                     </td>
                     <td>
                         @item.TotalPrice
@@ -72,6 +103,18 @@ else
                     @Html.DisplayNameFor(model => model.NumberOfInvoice)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.DateOfIssue)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Supplier.PaymentData.DueDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Costumer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Services)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.TotalPrice)
                 </th>
                 <th>
@@ -86,6 +129,21 @@ else
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.NumberOfInvoice)
+                    </td>
+                    <td>
+                        @item.DateOfIssue.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @item.Supplier.PaymentData.DueDate.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Costumer.Name)
+                    </td>
+                    <td>
+                        @foreach (var service in item.Services)
+                        {
+                            @Html.DisplayFor(item => service.NameOfService)
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalPrice)

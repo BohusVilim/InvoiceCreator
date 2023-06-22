@@ -9,15 +9,13 @@ namespace InvoiceCreator.Services
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
         private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
-        private readonly Invoice _invoice;
-        public InvoiceControllerService(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext, Invoice invoice)
+        public InvoiceControllerService(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext)
         {
             _context = context;
             _inMemoryContext = inMemoryContext;
-            _invoice = invoice;
         }
 
-        public List<Invoice> Search()
+        public List<Invoice>? Search()
         {
             var searchings = _inMemoryContext.Searchings.Where(a => a.SearchContent != null).ToList();
 

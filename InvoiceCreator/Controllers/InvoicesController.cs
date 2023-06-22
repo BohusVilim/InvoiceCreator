@@ -44,7 +44,12 @@ namespace InvoiceCreator.Controllers
             ViewBag.Search = _invoiceControllerService.Search();
 
               return _context.Invoices != null ? 
-                          View(await _context.Invoices.ToListAsync()) :
+                          View(await _context.Invoices
+                          .Include(a => a.Costumer)
+                          .Include(b => b.Supplier)
+                            .ThenInclude(s => s.PaymentData)
+                          .Include(c => c.Services)
+                          .ToListAsync()) :
                           Problem("Entity set 'InvoiceCreatorDbContext.Invoices'  is null.");
         }
 
@@ -91,12 +96,34 @@ namespace InvoiceCreator.Controllers
             return View(invoice);
         }
 
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Invoices == null)
+            {
+                return NotFound();
+            }
+
+            var invoices = await _context.Invoices
+                .Include(a => a.Costumer)
+                .Include(b => b.Supplier)
+                  .ThenInclude(s => s.PaymentData)
+                .Include(c => c.Services)
+                .ToListAsync();
+            var invoice = invoices.FirstOrDefault(a => a.Id == id);
+
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+            return View(invoice);
+        }
+
         // POST: Invoices/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("NumberOfInvoice,TotalPrice,Note,Id")] Invoice invoice)
+        public async Task<IActionResult> Edit(int id, Invoice invoice)
         {
             if (id != invoice.Id)
             {
