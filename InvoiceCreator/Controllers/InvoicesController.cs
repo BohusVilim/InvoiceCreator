@@ -147,8 +147,6 @@ namespace InvoiceCreator.Controllers
                     throw;
                 }
             }
-            
-            return View(invoice);
         }
 
         // GET: Invoices/Delete/5
