@@ -75,7 +75,7 @@ namespace InvoiceCreator.Controllers
         public IActionResult Create()
         {
             ViewBag.NumberOfInvoice = _helpers.DefaultNumberOfInvoice();
-            _mockingData.FillInMemoryDatabase();
+            //_mockingData.FillInMemoryDatabase();
 
             return View();
         }

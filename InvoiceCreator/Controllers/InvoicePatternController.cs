@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Org.BouncyCastle.Asn1;
 using Rotativa.AspNetCore;
 using System.Net.Mime;
 
@@ -30,6 +31,7 @@ namespace InvoiceCreator.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var video = new Video();
             return View(_invoicePdf);
         }
 
