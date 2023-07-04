@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 using static System.Formats.Asn1.AsnWriter;
 using KodimWeby.InternalServices;
+using InvoiceCreator.SeleniumTests;
 
 var builder = WebApplication.CreateBuilder(args);
 

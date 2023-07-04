@@ -54,7 +54,6 @@ namespace InvoiceCreator.Controllers
         public IActionResult Create()
         {
             _helpers.ClearInMemoryDatabase();
-
             return View();
         }
 
@@ -71,6 +70,7 @@ namespace InvoiceCreator.Controllers
             {
                 _inMemoryContext.Suppliers.Add(supplier);
                 _inMemoryContext.SaveChanges();
+
                 return RedirectToAction("Create", "PaymentDatas");
             }
             return View(supplier);
