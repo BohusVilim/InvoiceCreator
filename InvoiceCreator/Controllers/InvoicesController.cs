@@ -9,7 +9,6 @@ using InvoiceCreator.InvoiceCreatorDbContext;
 using InvoiceCreator.Models.MainModels;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using InvoiceCreator.Services;
-using InvoiceCreator.MockingGenerator;
 using System.Text.Json;
 
 namespace InvoiceCreator.Controllers
@@ -17,32 +16,21 @@ namespace InvoiceCreator.Controllers
     public class InvoicesController : Controller
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
-        private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
-        private readonly InvoiceService _invoiceService;
         private readonly Helpers.Helpers _helpers;
-        private readonly MockingData _mockingData;
         private readonly InvoiceControllerService _invoiceControllerService;
 
         public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, 
-            InvoiceCreatorInMemoryDbContext inMemoryContext, 
-            InvoiceService invoiceService, 
             Helpers.Helpers helpers, 
-            MockingData mockingData,
             InvoiceControllerService invoiceControllerService)
         {
             _context = context;
-            _inMemoryContext = inMemoryContext;
-            _invoiceService = invoiceService;
             _helpers = helpers;
-            _mockingData = mockingData;
             _invoiceControllerService = invoiceControllerService;
         }
 
         // GET: Invoices
         public async Task<IActionResult> Index()
         {
-            ViewBag.Search = _invoiceControllerService.Search();
-
               return _context.Invoices != null ? 
                           View(await _context.Invoices
                           .Include(a => a.Costumer)
@@ -91,8 +79,6 @@ namespace InvoiceCreator.Controllers
             _context.SaveChanges();
 
             return Json(new { success = true });
-
-            return View(invoice);
         }
 
         public async Task<IActionResult> Edit(int? id)

@@ -6,12 +6,10 @@ namespace InvoiceCreator.Services
     public class ServiceService
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
-        private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
 
-        public ServiceService(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext)
+        public ServiceService(InvoiceCreatorDbContext.InvoiceCreatorDbContext context)
         {
             _context = context;
-            _inMemoryContext = inMemoryContext;
         }
 
         public bool CreateService(Service service)
@@ -21,7 +19,7 @@ namespace InvoiceCreator.Services
             service.UnitPriceWithoutDPH = service.UnitPriceWithDPH / ((Convert.ToDecimal(service.DPH) + 100) / 100);
             service.TotalPriceWithDPH = service.UnitPriceWithDPH * service.NumberOfUnits;
 
-            using (var transaction = _context.Database.BeginTransaction())
+            /*using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
@@ -36,7 +34,7 @@ namespace InvoiceCreator.Services
                     transaction.Rollback();
                     throw;
                 }
-            }
+            }*/
             return result;
         }
     }

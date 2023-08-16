@@ -8,16 +8,14 @@ namespace InvoiceCreator.Services
     public class InvoiceControllerService
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
-        private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
-        public InvoiceControllerService(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext)
+        public InvoiceControllerService(InvoiceCreatorDbContext.InvoiceCreatorDbContext context)
         {
             _context = context;
-            _inMemoryContext = inMemoryContext;
         }
 
-        public List<Invoice>? Search()
+        /*public List<Invoice>? Search()
         {
-            var searchings = _inMemoryContext.Searchings.Where(a => a.SearchContent != null).ToList();
+            var searchings = _context.Searchings.Where(a => a.SearchContent != null).ToList();
 
             if (searchings.Count() > 0)
             {
@@ -67,6 +65,6 @@ namespace InvoiceCreator.Services
                 return null;
             }
             
-        }
+        }*/
     }
 }

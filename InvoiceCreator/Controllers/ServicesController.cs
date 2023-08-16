@@ -14,13 +14,11 @@ namespace InvoiceCreator.Controllers
     public class ServicesController : Controller
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
-        private readonly InvoiceCreatorInMemoryDbContext _inMemoryContext;
         private readonly ServiceService _serviceService;
 
-        public ServicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, InvoiceCreatorInMemoryDbContext inMemoryContext, ServiceService serviceService)
+        public ServicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, ServiceService serviceService)
         {
             _context = context;
-            _inMemoryContext = inMemoryContext;
             _serviceService = serviceService;
         }
 
