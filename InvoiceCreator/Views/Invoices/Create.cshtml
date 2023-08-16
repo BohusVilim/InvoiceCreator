@@ -8,9 +8,98 @@
 
 <h4>Invoice</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-action="Create">
+<form method="post" asp-action="Create">
+    <div class="row">
+        <div class="col-6 col-md-3">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Meno a priezvisko dodávateľa</label>
+                <input asp-for="Supplier.Name" class="form-control" />
+                <span asp-validation-for="Supplier.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Adresa dodávateľa</label>
+                <input asp-for="Supplier.Address" class="form-control" />
+                <span asp-validation-for="Supplier.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Krajina</label>
+                <input asp-for="Supplier.Country" class="form-control" />
+                <span asp-validation-for="Supplier.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">IČO</label>
+                <input asp-for="Supplier.ICO" class="form-control" />
+                <span asp-validation-for="Supplier.ICO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">DIČ</label>
+                <input asp-for="Supplier.DIC" class="form-control" />
+                <span asp-validation-for="Supplier.DIC" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Supplier.IsDPHPayer" /> Je dodávateľ platcom DPH?
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">IČ DPH</label>
+                <input asp-for="Supplier.IC_DPH" class="form-control" />
+                <span asp-validation-for="Supplier.IC_DPH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">URL</label>
+                <input asp-for="Supplier.URL" class="form-control" />
+                <span asp-validation-for="Supplier.URL" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Meno a priezvisko zákazníka</label>
+                <input asp-for="Costumer.Name" class="form-control" />
+                <span asp-validation-for="Costumer.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Adresa zákazníka</label>
+                <input asp-for="Costumer.Address" class="form-control" />
+                <span asp-validation-for="Costumer.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Krajina</label>
+                <input asp-for="Costumer.Country" class="form-control" />
+                <span asp-validation-for="Costumer.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">IČO</label>
+                <input asp-for="Costumer.ICO" class="form-control" />
+                <span asp-validation-for="Costumer.ICO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">DIČ</label>
+                <input asp-for="Costumer.DIC" class="form-control" />
+                <span asp-validation-for="Costumer.DIC" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Costumer.IsDPHPayer" /> Je zákazník platcom DPH?
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">IČ DPH</label>
+                <input asp-for="Costumer.IC_DPH" class="form-control" />
+                <span asp-validation-for="Costumer.IC_DPH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">URL</label>
+                <input asp-for="Costumer.URL" class="form-control" />
+                <span asp-validation-for="Costumer.URL" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NumberOfInvoice" class="control-label"></label>
@@ -27,12 +116,56 @@
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="form-group">
+                <label class="control-label">Dátum vyhotovenia</label>
+                <input type="date" asp-for="DateOfIssue" class="form-control" />
+                <span asp-validation-for="DateOfIssue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Dátum splatnosti</label>
+                <input type="date" asp-for="Supplier.PaymentData.DueDate" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Banka</label>
+                <input asp-for="Supplier.PaymentData.Bank" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.Bank" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">IBAN</label>
+                <input asp-for="Supplier.PaymentData.IBAN" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.IBAN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">SWIFT</label>
+                <input asp-for="Supplier.PaymentData.SWIFT" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.SWIFT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Variablný symbol</label>
+                <input asp-for="Supplier.PaymentData.VariableSymbol" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.VariableSymbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Konštantný symbol</label>
+                <input asp-for="Supplier.PaymentData.ConstantSymbol" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.ConstantSymbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Poznámka k platbe</label>
+                <input asp-for="Supplier.PaymentData.Note" class="form-control" />
+                <span asp-validation-for="Supplier.PaymentData.Note" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input id="openModalButton" type="submit" value="Create" class="btn btn-primary" />
             </div>
-        </form>
+        </div>
+
     </div>
-</div>
+</form>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 1190px">

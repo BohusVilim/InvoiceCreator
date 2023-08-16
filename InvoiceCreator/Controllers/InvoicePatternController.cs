@@ -31,7 +31,6 @@ namespace InvoiceCreator.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var video = new Video();
             return View(_invoicePdf);
         }
 

@@ -87,11 +87,10 @@ namespace InvoiceCreator.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Invoice invoice)
         {
+            _context.Invoices.Add(invoice);
+            _context.SaveChanges();
 
-            if (_invoiceService.CreateInvoice(invoice) == true)
-            {
-                return Json(new { success = true });
-            }
+            return Json(new { success = true });
 
             return View(invoice);
         }
