@@ -4,13 +4,11 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Invoice</h4>
+<h4>Vytvor faktúru</h4>
 <hr />
 <form method="post" asp-action="Create">
     <div class="row">
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3" style="margin-bottom: 20px">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -40,14 +38,18 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Supplier.IsDPHPayer" /> Je dodávateľ platcom DPH?
+                    <input class="form-check-input supplier-dph-check" asp-for="Supplier.IsDPHPayer" /> Je dodávateľ platcom DPH?
                 </label>
             </div>
-            <div class="form-group">
-                <label class="control-label">IČ DPH</label>
-                <input asp-for="Supplier.IC_DPH" class="form-control" />
-                <span asp-validation-for="Supplier.IC_DPH" class="text-danger"></span>
+
+            <div id="supplierDPHWrapper" style="display: none">
+                <div class="form-group">
+                    <label class="control-label">IČ DPH</label>
+                    <input asp-for="Supplier.IC_DPH" class="form-control" />
+                    <span asp-validation-for="Supplier.IC_DPH" class="text-danger"></span>
+                </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label">URL</label>
                 <input asp-for="Supplier.URL" class="form-control" />
@@ -55,7 +57,7 @@
             </div>
         </div>
 
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3" style="margin-bottom: 20px">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Meno a priezvisko zákazníka</label>
@@ -84,14 +86,18 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Costumer.IsDPHPayer" /> Je zákazník platcom DPH?
+                    <input class="form-check-input costumer-dph-check" asp-for="Costumer.IsDPHPayer" /> Je zákazník platcom DPH?
                 </label>
             </div>
-            <div class="form-group">
-                <label class="control-label">IČ DPH</label>
-                <input asp-for="Costumer.IC_DPH" class="form-control" />
-                <span asp-validation-for="Costumer.IC_DPH" class="text-danger"></span>
+
+            <div id="costumerDPHWrapper" style="display: none">
+                <div class="form-group">
+                    <label class="control-label">IČ DPH</label>
+                    <input asp-for="Costumer.IC_DPH" class="form-control" />
+                    <span asp-validation-for="Costumer.IC_DPH" class="text-danger"></span>
+                </div>
             </div>
+            
             <div class="form-group">
                 <label class="control-label">URL</label>
                 <input asp-for="Costumer.URL" class="form-control" />
@@ -102,33 +108,28 @@
         <div class="col-6 col-md-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="NumberOfInvoice" class="control-label"></label>
+                <label class="control-label">Číslo faktúry</label>
                 <input asp-for="NumberOfInvoice" class="form-control" value="@ViewBag.NumberOfInvoice" />
                 <span asp-validation-for="NumberOfInvoice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOfIssue" class="control-label"></label>
+                <label class="control-label">Dátum vyhotovenia</label>
                 <input type="date" asp-for="DateOfIssue" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="DateOfIssue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
+                <label class="control-label">Dátum splatnosti</label>
+                <input type="date" asp-for="Supplier.PaymentData.DueDate" class="form-control" value="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Supplier.PaymentData.DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Poznámka</label>
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
         </div>
 
-        <div class="col-6 col-md-3">
-            <div class="form-group">
-                <label class="control-label">Dátum vyhotovenia</label>
-                <input type="date" asp-for="DateOfIssue" class="form-control" />
-                <span asp-validation-for="DateOfIssue" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Dátum splatnosti</label>
-                <input type="date" asp-for="Supplier.PaymentData.DueDate" class="form-control" />
-                <span asp-validation-for="Supplier.PaymentData.DueDate" class="text-danger"></span>
-            </div>
+        <div class="col-6 col-md-3" style="margin-bottom: 20px">
             <div class="form-group">
                 <label class="control-label">Banka</label>
                 <input asp-for="Supplier.PaymentData.Bank" class="form-control" />
@@ -159,11 +160,54 @@
                 <input asp-for="Supplier.PaymentData.Note" class="form-control" />
                 <span asp-validation-for="Supplier.PaymentData.Note" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input id="openModalButton" type="submit" value="Create" class="btn btn-primary" />
-            </div>
         </div>
 
+        <div style="background-color: lightskyblue; border-radius: 5px">
+            <div id="service-wrapper">
+                <div id="service" style="margin: 10px">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Názov služby</label>
+                        <input asp-for="@Model.Services[0].NameOfService" class="form-control" />
+                        <span asp-validation-for="@Model.Services[0].NameOfService" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                    <label class="control-label">Popis služby</label>
+                    <input asp-for="@Model.Services[0].DescriptionOfService" class="form-control" />
+                    <span asp-validation-for="@Model.Services[0].DescriptionOfService" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Jednotková cena s DPH</label>
+                        <input asp-for="@Model.Services[0].UnitPriceWithDPH" class="form-control" />
+                        <span asp-validation-for="@Model.Services[0].UnitPriceWithDPH" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Počet jednotiek</label>
+                        <input asp-for="@Model.Services[0].NumberOfUnits" class="form-control" />
+                        <span asp-validation-for="@Model.Services[0].NumberOfUnits" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">DPH v %</label>
+                        <select asp-for="@Model.Services[0].DPH" class="form-control">
+                            <option value="20">20</option>
+                            <option value="10">10</option>
+                            <option value="5">5</option>
+                        </select>
+                        <span asp-validation-for="@Model.Services[0].DPH" class="text-danger"></span>
+                    </div>
+                <hr />
+                </div>
+            </div>
+                
+            <div class="form-group" style="margin-top: 20px; margin-left: 10px; margin-bottom: 10px">
+                <input id="addService" value="Pridaj službu" class="btn btn-primary" />
+            </div>
+        </div>
+        <div>
+            <div class="form-group" style="margin-top: 20px">
+                <input id="openModalButton" type="submit" value="Vytvor faktúru" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
 </form>
 
@@ -210,6 +254,54 @@
                     }
                 });
             });
+        });
+    </script>
+    <script>
+        var i = 1;
+
+        document.getElementById('addService').addEventListener('click', function() {
+            var existingService = document.getElementById('service');
+            var clon = existingService.cloneNode(true);
+
+            existingService.parentNode.insertBefore(clon, existingService.nextSibling);
+
+            var inputs = clon.querySelectorAll('input, select'); 
+            inputs.forEach(function (input) {
+                if (input.tagName.toLowerCase() === 'select') {
+                    input.selectedIndex = 0;
+                } else {
+                    input.value = '';
+                }
+            });
+
+            var regex = /\[([0-9]+)\]/g;
+            clon.innerHTML = clon.innerHTML.replace(regex, '[' + i + ']');
+            i++;
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Pri načítaní stránky skontrolujte stav zaškrtnutého políčka a prispôsobte zobrazenie divu pre Dodávateľa a Zákazníka
+            toggleWrapper($('.supplier-dph-check'), $('#supplierDPHWrapper'));
+            toggleWrapper($('.costumer-dph-check'), $('#costumerDPHWrapper'));
+
+            // Kedykoľvek sa zmení stav zaškrtnutého políčka pre Dodávateľa, skontrolujte a prispôsobte zobrazenie jeho divu
+            $('.supplier-dph-check').change(function () {
+                toggleWrapper($(this), $('#supplierDPHWrapper'));
+            });
+
+            // Kedykoľvek sa zmení stav zaškrtnutého políčka pre Zákazníka, skontrolujte a prispôsobte zobrazenie jeho divu
+            $('.costumer-dph-check').change(function () {
+                toggleWrapper($(this), $('#costumerDPHWrapper'));
+            });
+
+            function toggleWrapper(checkbox, wrapper) {
+                if (checkbox.is(':checked')) {
+                    wrapper.show();
+                } else {
+                    wrapper.hide();
+                }
+            }
         });
     </script>
 }

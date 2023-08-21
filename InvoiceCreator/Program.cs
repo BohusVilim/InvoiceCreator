@@ -1,7 +1,6 @@
 using InvoiceCreator.Controllers;
 using InvoiceCreator.Helpers;
 using InvoiceCreator.InvoiceCreatorDbContext;
-using InvoiceCreator.MockingGenerator;
 using InvoiceCreator.Models.MainModels;
 using InvoiceCreator.Models.ViewModels;
 using InvoiceCreator.Services;
@@ -18,9 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<InvoiceCreatorDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("InvoiceCreatorDbContext") ?? throw new InvalidOperationException("Connection string 'InvoiceCreatorDbContext' not found.")));
 
-builder.Services.AddDbContext<InvoiceCreatorInMemoryDbContext>(options =>
-    options.UseInMemoryDatabase("InvoiceCreatorInMemory"));
-
 EmailService.ConfigureEmail(builder.Services);
 
 builder.Services.AddHttpContextAccessor();
@@ -28,12 +24,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Invoice>();
 builder.Services.AddScoped<HomeController>();
 builder.Services.AddScoped<InvoicesController>();
-builder.Services.AddScoped<SuppliersController>();
-builder.Services.AddScoped<CostumersController>();
-builder.Services.AddScoped<PaymentDatasController>();
-builder.Services.AddScoped<ServicesController>(); 
-builder.Services.AddScoped<InvoiceService>();
-builder.Services.AddScoped<MockingData>();
 builder.Services.AddScoped<Helpers>(); 
 builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<InvoicePatternController>();
@@ -70,6 +60,6 @@ var context = scope.ServiceProvider.GetRequiredService<InvoiceCreatorDbContext>(
 context.Database.EnsureCreated();
 
 IWebHostEnvironment env = app.Environment;
-RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, @"C:\Users\bohus\OneDrive\Poèítaè\Praca\InvoiceCreator\InvoiceCreator\wwwroot\Rotativa\wkhtmltopdf\bin");
-
+string fullPath = Path.Combine(env.ContentRootPath, @"wwwroot\Rotativa\wkhtmltopdf\bin");
+RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, fullPath);
 app.Run();
