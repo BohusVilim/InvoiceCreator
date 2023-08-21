@@ -24,7 +24,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Invoice>();
 builder.Services.AddScoped<HomeController>();
 builder.Services.AddScoped<InvoicesController>();
-builder.Services.AddScoped<ServicesController>(); 
 builder.Services.AddScoped<Helpers>(); 
 builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<InvoicePatternController>();
@@ -61,5 +60,6 @@ var context = scope.ServiceProvider.GetRequiredService<InvoiceCreatorDbContext>(
 context.Database.EnsureCreated();
 
 IWebHostEnvironment env = app.Environment;
-RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, @"C:\Users\bohus\OneDrive\Poèítaè\Praca\InvoiceCreator\InvoiceCreator\wwwroot\Rotativa\wkhtmltopdf\bin");
+string fullPath = Path.Combine(env.ContentRootPath, @"wwwroot\Rotativa\wkhtmltopdf\bin");
+RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env, fullPath);
 app.Run();
