@@ -17,18 +17,15 @@ namespace InvoiceCreator.Controllers
     {
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
         private readonly Helpers.Helpers _helpers;
-        private readonly InvoiceControllerService _invoiceControllerService;
         private readonly SearchingService _searchingService;
 
         public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, 
             Helpers.Helpers helpers, 
-            InvoiceControllerService invoiceControllerService,
             SearchingService searchingService
             )
         {
             _context = context;
             _helpers = helpers;
-            _invoiceControllerService = invoiceControllerService;
             _searchingService = searchingService;
         }
 

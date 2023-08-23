@@ -29,7 +29,6 @@ builder.Services.AddScoped<InvoicePatternController>();
 builder.Services.AddScoped<InvoicePdfService>();
 builder.Services.AddScoped<SearchingService>();
 builder.Services.AddScoped<Searching>();
-builder.Services.AddScoped<InvoiceControllerService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
