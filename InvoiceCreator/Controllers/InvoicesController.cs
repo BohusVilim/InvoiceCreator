@@ -18,20 +18,29 @@ namespace InvoiceCreator.Controllers
         private readonly InvoiceCreatorDbContext.InvoiceCreatorDbContext _context;
         private readonly Helpers.Helpers _helpers;
         private readonly InvoiceControllerService _invoiceControllerService;
+        private readonly SearchingService _searchingService;
 
         public InvoicesController(InvoiceCreatorDbContext.InvoiceCreatorDbContext context, 
             Helpers.Helpers helpers, 
-            InvoiceControllerService invoiceControllerService)
+            InvoiceControllerService invoiceControllerService,
+            SearchingService searchingService
+            )
         {
             _context = context;
             _helpers = helpers;
             _invoiceControllerService = invoiceControllerService;
+            _searchingService = searchingService;
         }
 
         // GET: Invoices
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Searching searching)
         {
-              return _context.Invoices != null ? 
+            if (searching.SearchContent != null)
+            {
+                ViewBag.Search = _searchingService.Search(searching);
+            }
+
+            return _context.Invoices != null ? 
                           View(await _context.Invoices
                           .Include(a => a.Costumer)
                           .Include(b => b.Supplier)
@@ -63,7 +72,6 @@ namespace InvoiceCreator.Controllers
         public IActionResult Create()
         {
             ViewBag.NumberOfInvoice = _helpers.DefaultNumberOfInvoice();
-            //_mockingData.FillInMemoryDatabase();
 
             return View();
         }
@@ -75,6 +83,12 @@ namespace InvoiceCreator.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Invoice invoice)
         {
+            foreach (var service in invoice.Services)
+            {
+                service.UnitPriceWithoutDPH = service.UnitPriceWithDPH / (service.DPH / 100 + 1);
+                service.TotalPriceWithDPH = service.UnitPriceWithoutDPH * service.NumberOfUnits;
+            }
+
             _context.Invoices.Add(invoice);
             _context.SaveChanges();
 

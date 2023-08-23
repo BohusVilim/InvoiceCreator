@@ -25,10 +25,10 @@ builder.Services.AddScoped<Invoice>();
 builder.Services.AddScoped<HomeController>();
 builder.Services.AddScoped<InvoicesController>();
 builder.Services.AddScoped<Helpers>(); 
-builder.Services.AddScoped<ServiceService>();
 builder.Services.AddScoped<InvoicePatternController>();
 builder.Services.AddScoped<InvoicePdfService>();
-builder.Services.AddScoped<SearchingController>();
+builder.Services.AddScoped<SearchingService>();
+builder.Services.AddScoped<Searching>();
 builder.Services.AddScoped<InvoiceControllerService>();
 
 // Add services to the container.
@@ -56,7 +56,7 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<InvoiceCreatorDbContext>();
+var context = scope.ServiceProvider.GetRequiredService<InvoiceCreator.InvoiceCreatorDbContext.InvoiceCreatorDbContext>();
 context.Database.EnsureCreated();
 
 IWebHostEnvironment env = app.Environment;

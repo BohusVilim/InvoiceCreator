@@ -257,15 +257,15 @@
         });
     </script>
     <script>
-        var i = 1;
+        i = 1;
 
         document.getElementById('addService').addEventListener('click', function() {
-            var existingService = document.getElementById('service');
-            var clon = existingService.cloneNode(true);
+            existingService = document.getElementById('service');
+            clon = existingService.cloneNode(true);
 
             existingService.parentNode.insertBefore(clon, existingService.nextSibling);
 
-            var inputs = clon.querySelectorAll('input, select'); 
+            inputs = clon.querySelectorAll('input, select'); 
             inputs.forEach(function (input) {
                 if (input.tagName.toLowerCase() === 'select') {
                     input.selectedIndex = 0;
@@ -274,23 +274,20 @@
                 }
             });
 
-            var regex = /\[([0-9]+)\]/g;
+            regex = /\[([0-9]+)\]/g;
             clon.innerHTML = clon.innerHTML.replace(regex, '[' + i + ']');
             i++;
         });
     </script>
     <script>
         $(document).ready(function () {
-            // Pri načítaní stránky skontrolujte stav zaškrtnutého políčka a prispôsobte zobrazenie divu pre Dodávateľa a Zákazníka
             toggleWrapper($('.supplier-dph-check'), $('#supplierDPHWrapper'));
             toggleWrapper($('.costumer-dph-check'), $('#costumerDPHWrapper'));
 
-            // Kedykoľvek sa zmení stav zaškrtnutého políčka pre Dodávateľa, skontrolujte a prispôsobte zobrazenie jeho divu
             $('.supplier-dph-check').change(function () {
                 toggleWrapper($(this), $('#supplierDPHWrapper'));
             });
 
-            // Kedykoľvek sa zmení stav zaškrtnutého políčka pre Zákazníka, skontrolujte a prispôsobte zobrazenie jeho divu
             $('.costumer-dph-check').change(function () {
                 toggleWrapper($(this), $('#costumerDPHWrapper'));
             });
